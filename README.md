@@ -62,12 +62,18 @@ developing your own process.
 
 - Add a new toy when the toy form is submitted
 
-  - How I debugged:
+  - How I debugged: Received 500 Internal Server Error in network tab after submitting new Toy -> opened Rails server log -> looked for last request that came through -> found error message and stack traced to identify where error originated -> from terminal: NameError (uninitialized constant ToysController::Toys): app/controllers/toys_controller.rb:10: in 'create'
+
+  -> in app/controllers/toys_controller -> spelling mistake -> corrected Toys.create to Toy.create
 
 - Update the number of likes for a toy
 
-  - How I debugged:
+  - How I debugged: Received Unexpected end of JSON input error in window -> did not check fetch request (directions stated React will not change) -> checked controller action to check for render json: -> update method did not render json response
+
+  added: render json: toy, status: :ok
 
 - Donate a toy to Goodwill (and delete it from our database)
 
-  - How I debugged:
+  - How I debugged: Received 404 Not Found in console -> checked Network Tab -> Shows DELETE Not Found -> checked Rails Server logs -> shows: ActionController::RoutingError (No route matches [DELETE] "/toys/2")
+    -> added new route to handle DELETE request:
+    resources :toys, only: [:index, :create, :update, :destroy]
